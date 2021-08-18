@@ -13,6 +13,10 @@
 #include "../bindings/config.h"
 #include "../bindings/errors.h"
 
+#define MOSI_PIN 13
+#define MISO_PIN 16
+#define CLK_PIN 14
+
 int tf_hal_create(TF_HalContext *hal, TF_Port *ports, uint8_t port_count) {
     int rc = tf_hal_common_create(hal);
     if (rc != TF_E_OK) {
@@ -31,7 +35,11 @@ int tf_hal_create(TF_HalContext *hal, TF_Port *ports, uint8_t port_count) {
     }
 
     hal->spi_settings = SPISettings(1400000, SPI_MSBFIRST, SPI_MODE3);
-
+    
+    // Manual remapping of SPI Pins because Olimex ESP32-PoE has no GPIO12 Pin 
+    hal->hspi.begin(CLK_PIN, MISO_PIN, MOSI_PIN);
+    
+    /*
     if (uses_hspi) {
         hal->hspi = SPIClass(HSPI);
         hal->hspi.begin();
@@ -40,6 +48,7 @@ int tf_hal_create(TF_HalContext *hal, TF_Port *ports, uint8_t port_count) {
         hal->vspi = SPIClass(VSPI);
         hal->vspi.begin();
     }
+    */
 
     for(int i = 0; i < port_count; ++i) {
         pinMode(hal->ports[i].chip_select_pin, OUTPUT);
