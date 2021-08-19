@@ -36,7 +36,8 @@ int tf_hal_create(TF_HalContext *hal, TF_Port *ports, uint8_t port_count) {
 
     hal->spi_settings = SPISettings(1400000, SPI_MSBFIRST, SPI_MODE3);
     
-    // Manual remapping of SPI Pins because Olimex ESP32-PoE has no GPIO12 Pin 
+    // Manual remapping of SPI Pins because Olimex ESP32-PoE has no GPIO12 Pin
+    hal->hspi = SPIClass(HSPI); 
     hal->hspi.begin(CLK_PIN, MISO_PIN, MOSI_PIN);
     
     /*
