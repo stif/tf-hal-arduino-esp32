@@ -13,9 +13,9 @@
 #include "../bindings/config.h"
 #include "../bindings/errors.h"
 
-#define MOSI_PIN 13
-#define MISO_PIN 36
-#define CLK_PIN 14
+#define MOSI_PIN 3
+#define MISO_PIN 35
+#define CLK_PIN 0
 
 int tf_hal_create(TF_HalContext *hal, TF_Port *ports, uint8_t port_count) {
     int rc = tf_hal_common_create(hal);
